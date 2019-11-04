@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> 
+      Shopping List
+    </ion-title>
+    <ion-button (click)="deleteAll()" >Delete All</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <ion-item>
+      <ion-input type="text" placeholder="Enter item" [(ngModel)]="itemName"></ion-input>
+      <div class="item-note" item-end>
+        <ion-button (click)="addItem()"><ion-icon name="add"></ion-icon></ion-button>
+      </div>
+    </ion-item>
+    <div>
+      <ion-list>
+        <ion-item *ngFor="let item of shoppingList; let i = index">
+          <input type="checkbox" class="cbox4" value="fourth_checkbox"> <label for="cbox4">{{item}}</label>
+          <div class="item-note" item-end>
+            <ion-button clear (click)="updateItem(i)">
+              <ion-icon name="create"></ion-icon>
+            </ion-button>
+            <ion-button clear (click)="deleteItem(i)">
+                <ion-icon name="trash"></ion-icon>
+            </ion-button>
+
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>
