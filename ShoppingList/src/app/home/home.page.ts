@@ -35,9 +35,9 @@ export class HomePage {
     }
   }
 
-  deleteItem(index) {
+  async deleteItem(index) {
     this.shoppingList.splice(index, 1);
-    this.storage.set('productList', JSON.stringify(this.shoppingList));
+    await this.storage.set('productList', JSON.stringify(this.shoppingList));
   }
 
   async updateItem(index) {
@@ -45,9 +45,9 @@ export class HomePage {
       message: 'Type to update',
       inputs: [{ name: 'editItem', placeholder: 'Item'}],
       buttons: [{ text: 'Cancel', role: 'cancel' },
-                {text: 'update', handler: data => {
+                {text: 'update', handler: async data => {
                   this.shoppingList[index].name = data.editItem;
-                  this.storage.set('productList', JSON.stringify(this.shoppingList));
+                  await this.storage.set('productList', JSON.stringify(this.shoppingList));
                  }
                 }
               ]
@@ -55,9 +55,9 @@ export class HomePage {
     alert.present();
   }
 
-  deleteAll() {
+  async deleteAll() {
     this.shoppingList = [];
-    this.storage.set('productList', JSON.stringify(this.shoppingList));
+    await this.storage.set('productList', JSON.stringify(this.shoppingList));
   }
 
   async itemChecked(index) {
