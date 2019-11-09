@@ -3,7 +3,6 @@
     <ion-title> 
       Shopping List
     </ion-title>
-    <ion-button (click)="deleteAll()" slot='end' >Delete All</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -18,18 +17,20 @@
     <div>
       <ion-list>
         <ion-item *ngFor="let item of shoppingList; let i = index">
-          <input type="checkbox" class="cbox4" value="fourth_checkbox"> <label for="cbox4">{{item}}</label>
-          <div class="item-note">
+          <input type="checkbox" (click)="itemChecked(i)"[(ngModel)]="item.status" class="cbox4" value="fourth_checkbox"> <label for="cbox4">{{ item.name }}</label>
+          <div class="item-note" item-end>
             <ion-button clear (click)="updateItem(i)" slot='end'>
               <ion-icon name="create"></ion-icon>
             </ion-button>
-            <ion-button clear (click)="deleteItem(i)" slot='primary'>
+            <ion-button clear (click)="deleteItem(i)" slot='end'>
                 <ion-icon name="trash"></ion-icon>
             </ion-button>
-
           </div>
         </ion-item>
       </ion-list>
+    </div>
+    <div text-center>
+      <ion-button (click)="deleteAll()" slot='end' >Delete All</ion-button>
     </div>
   </div>
 </ion-content>

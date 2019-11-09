@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { Item } from '../product';
 
 @Component({
   selector: 'app-home',
@@ -24,11 +25,13 @@ export class HomePage {
 
   async addItem() {
     if (this.shoppingList.length >= 0) {
+      let itemObject = new Item();
       let item = this.itemName;
-      console.log(item);
-      this.shoppingList.push(item);
-      this.itemName = '';
+      itemObject.name = item;
+      itemObject.status = false;
+      this.shoppingList.push(itemObject);
       await this.storage.set('productList', JSON.stringify(this.shoppingList));
+      this.itemName = '';
     }
   }
 
@@ -43,7 +46,7 @@ export class HomePage {
       inputs: [{ name: 'editItem', placeholder: 'Item'}],
       buttons: [{ text: 'Cancel', role: 'cancel' },
                 {text: 'update', handler: data => {
-                  this.shoppingList[index] = data.editItem;
+                  this.shoppingList[index].name = data.editItem;
                   this.storage.set('productList', JSON.stringify(this.shoppingList));
                  }
                 }
@@ -52,9 +55,19 @@ export class HomePage {
     alert.present();
   }
 
-  deleteAll(){
+  deleteAll() {
     this.shoppingList = [];
     this.storage.set('productList', JSON.stringify(this.shoppingList));
+  }
+
+  async itemChecked(index) {
+    if (this.shoppingList[index].status === false) {
+      this.shoppingList[index].status = true;
+    } else  {
+      this.shoppingList[index].status = false;
+    }
+
+    await this.storage.set('productList', JSON.stringify(this.shoppingList));
   }
 
 }
